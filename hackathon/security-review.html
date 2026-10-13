@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillBounty — source review</title>
+    <style>
+      body {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 36px 24px 64px;
+        color: #15252c;
+        background: #f5f8f9;
+        font:
+          16px/1.55 system-ui,
+          sans-serif;
+      }
+      h1,
+      h2 {
+        line-height: 1.2;
+      }
+      h1 {
+        font-size: 2.4rem;
+      }
+      h2 {
+        margin-top: 2rem;
+      }
+      .score {
+        display: inline-block;
+        margin: 0 8px 8px 0;
+        padding: 7px 12px;
+        border: 1px solid #b8cbd1;
+        border-radius: 6px;
+        background: white;
+      }
+      .notice {
+        padding: 14px 16px;
+        border: 1px solid #e2bd66;
+        border-radius: 6px;
+        background: #fff4d8;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #c5d2d7;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #e7eff1;
+      }
+      code {
+        white-space: normal;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>SkillBounty source review</h1>
+    <p>
+      <strong>Scope:</strong> source review plus local Anchor compilation and
+      LiteSVM tests. No independent audit, fuzzing, or Devnet deployment was
+      performed.
+    </p>
+    <p class="notice">
+      <strong>Local verification, not an audit.</strong> Anchor build succeeds
+      and seven LiteSVM tests pass with the pinned toolchain. The program is not
+      deployed, has not been independently audited, and is not ready for
+      mainnet funds. Treat deployment and independent review as outstanding.
+    </p>
+
+    <h2>Scores</h2>
+    <p>
+      <span class="score">Security: not independently audited</span
+      ><span class="score">Correctness: local tests passed</span
+      ><span class="score">Testing: 7 LiteSVM tests passed</span
+      ><span class="score">Mainnet readiness: no</span>
+    </p>
+    <p>
+      Signer checks, Anchor account ownership, PDA seed validation, one-time
+      bounty initialization, state transitions, and payout recipient matching
+      are present in source. The program builds and tests cover lifecycle,
+      authorization, refund and timeout behavior. No mainnet readiness claim is
+      made.
+    </p>
+
+    <h2>Changes made during review</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Severity</th>
+          <th>Finding</th>
+          <th>Change</th>
+          <th>Remaining verification</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>High</td>
+          <td>
+            A submitted bounty had no worker-side timeout path if the employer
+            never approved it. Funds could remain locked indefinitely.
+          </td>
+          <td>
+            Added a seven-day review deadline and
+            <code>claim_after_review_timeout</code>, which permits only the
+            recorded worker to release the escrow after the review period.
+          </td>
+          <td>
+            Covered by the seven passing LiteSVM tests; Devnet behavior remains
+            unverified.
+          </td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>
+            A public PDA can receive unsolicited SOL; transferring only the
+            original bounty amount could leave dust stranded.
+          </td>
+          <td>
+            Approval, timeout claim, and expiry refund now release the full PDA
+            balance to the designated worker or employer, after checking it
+            covers the recorded amount.
+          </td>
+          <td>
+            Local lifecycle tests pass; confirm donation edge cases during an
+            independent review before real user funds.
+          </td>
+        </tr>
+        <tr>
+          <td>Medium</td>
+          <td>
+            An off-curve address cannot sign as a worker and should not be
+            assignable.
+          </td>
+          <td>
+            Assignment now rejects off-curve worker addresses. Added a
+            corresponding LiteSVM case.
+          </td>
+          <td>Covered by local program compilation and LiteSVM tests.</td>
+        </tr>
+        <tr>
+          <td>High readiness</td>
+          <td>
+            The client is integrated, but the program is not deployed on
+            Devnet. The live chain flow cannot yet be demonstrated.
+          </td>
+          <td>
+            The UI checks for an executable Devnet program and keeps actions
+            disabled until deployment. It requests wallet confirmation before
+            any transaction.
+          </td>
+          <td>
+            Deploy to Devnet only with explicit authorization, then test all
+            lifecycle paths using test wallets and verify explorer records.
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2>Before any Devnet user test</h2>
+    <ol>
+      <li>
+        Keep all seven LiteSVM tests passing; add any new edge-case tests found
+        during an independent review, especially refund after submission and
+        early or wrong-worker timeout claims.
+      </li>
+      <li>
+        Review rent, lamport-donation, and CPI behavior against the actual
+        Anchor/Solana versions in the lockfile.
+      </li>
+      <li>
+        Verify the ignored deploy keypair matches the generated program ID and
+        review the deployment authority before any deployment.
+      </li>
+      <li>
+        Test employer payout, worker timeout claim, and expired refund on Devnet
+        with test wallets. Never use mainnet funds in this demo.
+      </li>
+    </ol>
+    <p>
+      Current source: <code>anchor/programs/skill_bounty/src/lib.rs</code> ·
+      Tests: <code>anchor/programs/skill_bounty/src/tests.rs</code>
+    </p>
+  </body>
+</html>

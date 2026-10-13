@@ -1,0 +1,20 @@
+[toolchain]
+anchor_version = "1.1.2"
+solana_version = "3.1.10"
+package_manager = "npm"
+
+[features]
+resolution = true
+skip-lint = false
+
+[programs.devnet]
+skill_bounty = "FfQi9opVmK3BaWz1tpdR3Gz5zDhV76afuvJmnuAsttcw"
+
+[provider]
+cluster = "devnet"
+wallet = "~/.config/solana/id.json"
+
+[scripts]
+test = "cargo test"
+
+[hooks]

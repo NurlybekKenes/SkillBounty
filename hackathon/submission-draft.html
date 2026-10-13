@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>SkillBounty — hackathon submission draft</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --ink: #14232b;
+        --muted: #52666e;
+        --line: #c5d4d9;
+        --accent: #087b91;
+        --paper: #f4f8f9;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        max-width: 880px;
+        margin: 0 auto;
+        padding: 40px 24px 72px;
+        color: var(--ink);
+        background: var(--paper);
+        font:
+          16px/1.6 system-ui,
+          sans-serif;
+      }
+      h1,
+      h2 {
+        line-height: 1.2;
+      }
+      h1 {
+        font-size: clamp(2.4rem, 7vw, 4.4rem);
+        margin-bottom: 0.2em;
+      }
+      h2 {
+        margin-top: 2em;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 0.45em;
+      }
+      .tagline {
+        color: var(--accent);
+        font-size: 1.2rem;
+        font-weight: 650;
+      }
+      .notice {
+        padding: 16px 18px;
+        background: #fff2d8;
+        border: 1px solid #e5c37b;
+        border-radius: 8px;
+      }
+      .label {
+        color: var(--muted);
+        text-transform: uppercase;
+        font:
+          700 0.75rem/1.4 ui-monospace,
+          monospace;
+        letter-spacing: 0.08em;
+      }
+      .placeholder {
+        color: #9b4c00;
+        font-weight: 650;
+      }
+      li {
+        margin: 0.4em 0;
+      }
+      a {
+        color: #05687e;
+      }
+      @media print {
+        body {
+          background: white;
+        }
+        .notice {
+          break-inside: avoid;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <p class="label">
+      Colosseum Crypto World's Fair · Superteam Kazakhstan Track
+    </p>
+    <h1>SkillBounty</h1>
+    <p class="tagline">Small projects. Verifiable proof of work.</p>
+    <p>
+      SkillBounty helps early-career analysts and developers find small, paid
+      projects that match skills they can demonstrate. Teams post a scoped task,
+      review explainable candidate recommendations, and choose a worker
+      themselves. The prototype includes sample analytics bounties, fictional
+      candidate profiles, a deterministic skill-overlap score, and a local-only
+      project draft flow.
+    </p>
+    <p>
+      For students and junior specialists, the first real project is often the
+      hardest to get. Coursework does not always show how someone works with a
+      real brief, and a CV alone gives a small team little evidence for a short
+      engagement. Small companies, in turn, may need a focused data or product
+      task completed without running a full hiring process.
+    </p>
+    <p>
+      SkillBounty narrows that gap to one bounded project: a team describes a
+      result and required skills; candidates can be ranked by transparent
+      evidence; the team makes the final selection and evaluates the work. The
+      current matching endpoint is a rule-based prototype over sample data. It
+      does not use a hosted LLM, make hiring decisions, or persist submitted
+      drafts.
+    </p>
+    <p>
+      Solana is intended to provide a shared payment and receipt layer for
+      cross-team work. The Anchor source models employer-funded SOL escrow,
+      worker assignment, submission hashes, employer approval, payout, and
+      expiry refunds. The code keeps briefs and deliverables off-chain. At this
+      the Anchor program builds locally and seven LiteSVM tests pass. A typed
+      Codama client is integrated into the wallet UI. The program has not been
+      independently audited or deployed; no Devnet transaction is available to
+      demonstrate.
+    </p>
+    <p>
+      The web prototype uses Next.js, TypeScript, Solana Kit wallet discovery,
+      and an Anchor program workspace. Local validation covers the Windows
+      production build, TypeScript, scoped lint, Anchor compilation, and seven
+      LiteSVM tests. This workspace still needs a clean Linux dependency install
+      to verify an Ubuntu web build. The next technical milestone is an
+      explicitly authorized Devnet deployment followed by wallet-based
+      lifecycle verification.
+    </p>
+
+    <h2>Submission fields to complete</h2>
+    <ul>
+      <li>
+        <span class="label">Global project URL:</span>
+        <span class="placeholder">[Create/confirm Colosseum project]</span>
+      </li>
+      <li>
+        <span class="label">Public source repository:</span>
+        <span class="placeholder"
+          >[Push and confirm judges can access the SkillBounty repository]</span
+        >
+      </li>
+      <li>
+        <span class="label">Live demo URL:</span>
+        <span class="placeholder"
+          >[Deploy and verify public access; localhost is not a submission
+          demo]</span
+        >
+      </li>
+      <li>
+        <span class="label">Product demo video, ≤3 minutes:</span>
+        <span class="placeholder"
+          >[Record working product; include on-chain flow only after it is
+          deployed and verified]</span
+        >
+      </li>
+      <li>
+        <span class="label">Separate team pitch video, ≤2 minutes:</span>
+        <span class="placeholder"
+          >[Add founders, roles, and why this team can build it]</span
+        >
+      </li>
+      <li>
+        <span class="label">Team profiles:</span>
+        <span class="placeholder"
+          >[Each member completes their Colosseum profile]</span
+        >
+      </li>
+    </ul>
+
+    <h2>Readiness and dates</h2>
+    <div class="notice">
+      <strong>Draft only. Submission deadline has passed.</strong> The hackathon listing
+      requires a direct repository link, a working product demo video, a
+      separate pitch video, complete team profiles, and global Colosseum
+      registration. The global page lists October 12, 2026 as the submission
+      deadline of October 12, 2026, which has passed. The Kazakhstan listing
+      says registration closed October 8, 2026. Confirm with the organizers
+      whether an already registered project can still be considered. This artifact
+      does not submit, publish, or upload anything.
+    </div>
+    <p>
+      <a
+        href="https://superteam.fun/earn/listing/colosseum-crypto-worlds-fair-hackathon-superteam-kazakhstan-track"
+        >Kazakhstan track requirements</a
+      >
+      ·
+      <a href="https://colosseum.com/worldsfair"
+        >Official Crypto World's Fair</a
+      >
+    </p>
+  </body>
+</html>
